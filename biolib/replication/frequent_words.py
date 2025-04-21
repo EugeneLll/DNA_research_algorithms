@@ -1,4 +1,5 @@
 import encoding as encode
+import biolib.replication.neigbors as neighbors_lib
 
 
 def reverse_compliment(pattern: str) -> str:
@@ -35,29 +36,6 @@ def frequent_words(text: str, k: int) -> tuple[list[str], int]:
     return patterns, maxfreq
 
 
-def immediate_neighbors(pattern: str) -> set[str]:
-    nucl = ["a", "c", "g", "t"]
-    neighborhood = set()
-    for i in range(len(pattern)):
-        symbol = pattern[i]
-        for n in nucl:
-            if n == symbol:
-                continue
-            neighbor = list(pattern)
-            neighbor[i] = n
-            neighborhood.add("".join(neighbor))
-    return neighborhood
-
-
-def neighbors(pattern: str, d: int) -> set[int]:
-    neighbourhood = {pattern}
-    for i in range(d):
-        copy = neighbourhood.copy()
-        for pat in copy:
-            neighbourhood.update(immediate_neighbors(pat))
-    return neighbourhood
-
-
 def find_occurances(text: str, pattern: str) -> int:
     count = 0
     for i in range(len(text) - len(pattern) + 1):
@@ -76,8 +54,8 @@ def frequent_words_with_mismatches_compliments(
         pattern = text[i : i + k]
         compliment = reverse_compliment(pattern)
         ind = encode.pattern_to_number(pattern)
-        neighbors_pattern = neighbors(pattern=pattern, d=d)
-        neighbors_compliment = neighbors(compliment, d)
+        neighbors_pattern = neighbors_lib.neighbors(pattern=pattern, d=d)
+        neighbors_compliment = neighbors_lib.neighbors(compliment, d)
         if been_to.issuperset(neighbors_pattern):
             continue
         neigh = neighbors_pattern.union(neighbors_compliment)
