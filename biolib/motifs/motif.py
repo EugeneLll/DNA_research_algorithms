@@ -4,10 +4,13 @@ from collections import Counter
 
 class Motif:
     def __init__(self, pattern_list: list[str]):
-        self.__motifs = np.array(list(map(lambda x: list(x), pattern_list)))
+        self.__motifs = np.array(
+            [np.array(list(x), dtype=np.dtypes.StringDType()) for x in pattern_list]
+        )
         self.__dna_parts = ["a", "c", "g", "t"]
 
     def score(self) -> int:
+
         t = len(self.__motifs)
         count = sum(
             map(

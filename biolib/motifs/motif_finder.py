@@ -61,7 +61,7 @@ def greedy_motif_search_laplace(dna: list[str], k: int) -> Motif:
 
 
 def randomized_motif_search(dna: list[str], k: int) -> Motif:
-    rand = [random.randint(0, len(dna[0] - k + 1)) for _ in range(len(dna))]
+    rand = [random.randint(0, len(seq) - k) for seq in dna]
     best = [dna[i][rand[i] : rand[i] + k] for i in range(len(rand))]
     best_motif = Motif(best)
     motif = Motif(best)
@@ -74,7 +74,7 @@ def randomized_motif_search(dna: list[str], k: int) -> Motif:
 
 
 def gibbs_sampler(dna: list[str], k: int, n: int) -> Motif:
-    rand = [random.randint(0, len(dna[0] - k + 1)) for _ in range(len(dna))]
+    rand = [random.randint(0, len(seq) - k) for seq in dna]
     best = [dna[i][rand[i] : rand[i] + k] for i in range(len(rand))]
     best_motif = Motif(best)
     motif = Motif(best)
