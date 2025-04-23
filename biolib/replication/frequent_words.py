@@ -1,5 +1,5 @@
-import encoding as encode
-import neigbors as neighbors_lib
+import biolib.replication.encoding as encode
+import biolib.neigbors as neighbors_lib
 
 
 def reverse_compliment(pattern: str) -> str:

@@ -1,7 +1,7 @@
-import neigbors as neighbors_lib
+import biolib.neigbors as neighbors_lib
 import random
-import motif_utils
-from motif import Motif
+import biolib.motifs.motif_utils
+from biolib.motifs.motif import Motif
 
 
 def motif_enumeration(dna: list[str], k: int, d: int) -> set[str]:
