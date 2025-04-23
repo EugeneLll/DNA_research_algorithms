@@ -1,5 +1,5 @@
 import encoding as encode
-import biolib.replication.neigbors as neighbors_lib
+import neigbors as neighbors_lib
 
 
 def reverse_compliment(pattern: str) -> str:
@@ -73,13 +73,3 @@ def frequent_words_with_mismatches_compliments(
             final_patterns.append(encode.number_to_pattern(ind, k))
 
     return final_patterns, max_patttern
-
-
-if __name__ == "__main__":
-
-    a = frequent_words_with_mismatches_compliments(
-        "aatgatgatgacgtcaaaaggatccggataaaacatggtgattgcctcgcataacgcggtatgaaaatggattgaagcccgggccgtggattctactcaactttgtcggcttgagaaagacctgggatcctgggtattaaaaagaagatctatttatttagagatctgttctattgtgatctcttattaggatcgcactgccctgtggataacaaggatccggcttttaagatcaacaacctggaaaggatcattaactgtgaatgatcggtgatcctggaccgtataagctgggatcagaatgaggggttatacacaactcaaaaactgaacaacagttgttctttggataactaccggttgatccaagcttcctgacagagttatccacagtagatcgcacgatctgtatacttatttgagtaaattaacccacgatcccagccattcttctgccggatcttccggaatgtcgtgatcaagaatgttgatcttcagtg",
-        9,
-        1,
-    )
-    print(a)
