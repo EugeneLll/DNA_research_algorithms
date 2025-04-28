@@ -1,6 +1,6 @@
 import biolib.neigbors as neighbors_lib
 import random
-import biolib.motifs.motif_utils
+from biolib.motifs import motif_utils
 from biolib.motifs.motif import Motif
 
 
@@ -15,7 +15,7 @@ def motif_enumeration(dna: list[str], k: int, d: int) -> set[str]:
                 patterns.add(neighbor)
 
 
-def median_string(dna: list[str], k: int) -> str:
+def median_string(dna: list[str], k: int) -> tuple[str, int]:
     dist = float("inf")
     median = ""
     for pattern in motif_utils.k_mer_generator(k):
@@ -23,7 +23,7 @@ def median_string(dna: list[str], k: int) -> str:
         if dist > d:
             dist = d
             median = pattern
-    return median
+    return median, dist
 
 
 def greedy_motif_search(dna: list[str], k: int) -> Motif:
@@ -54,7 +54,7 @@ def greedy_motif_search_laplace(dna: list[str], k: int) -> Motif:
                 [dna[j][i : i + k] for i in range(len(dna[0]) - k + 1)],
                 key=lambda x: motifs.prob_laplace(x),
             )
-            motifs.add_motif(motifi)
+            motifs = motifs.add_motif(motifi)
         if motifs.score() < best_motifs.score():
             best_motifs = motifs
     return best_motifs
@@ -64,11 +64,11 @@ def randomized_motif_search(dna: list[str], k: int) -> Motif:
     rand = [random.randint(0, len(seq) - k) for seq in dna]
     best = [dna[i][rand[i] : rand[i] + k] for i in range(len(rand))]
     best_motif = Motif(best)
-    motif = Motif(best)
+    motif = Motif(best.copy())
     while 1:
-        motif.motifs(dna)
+        motif = motif.motifs(dna)
         if motif.score() < best_motif.score():
-            best_motif = motif
+            best_motif = motif.copy()
         else:
             return best_motif
 
@@ -77,15 +77,18 @@ def gibbs_sampler(dna: list[str], k: int, n: int) -> Motif:
     rand = [random.randint(0, len(seq) - k) for seq in dna]
     best = [dna[i][rand[i] : rand[i] + k] for i in range(len(rand))]
     best_motif = Motif(best)
-    motif = Motif(best)
+    motif = Motif(best.copy())
     for i in range(n):
-        j = random.randint(0, len(dna))
+        j = random.randint(0, len(dna) - 1)
         destr = motif.profile_destr(dna, j)
-        choise = random.choices(range(len(dna[0]) - k + 1), destr)
+        try:
+            choise = random.choices(range(len(dna[0]) - k + 1), weights=destr)[0]
+        except:
+            return best_motif
         new_motif = dna[j][choise : choise + k]
         motifs = motif.as_list()
         motifs[j] = new_motif
         motif = Motif(motifs)
         if motif.score() < best_motif.score():
-            best_motif = motif
+            best_motif = motif.copy()
     return best_motif

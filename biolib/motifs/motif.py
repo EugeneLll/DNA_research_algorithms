@@ -76,7 +76,9 @@ class Motif:
         return lst
 
     def add_motif(self, motif: str):
-        self.__motifs = np.vstack(self.__motifs, np.array([list(motif)]))
+        ret = self.as_list()
+        ret.append(motif)
+        return Motif(ret)
 
     def motifs(self, dna: list[str]):
         new_motif = []
@@ -84,23 +86,26 @@ class Motif:
         for j in range(len(self.__motifs)):
             motifi = max(
                 [dna[j][i : i + k] for i in range(len(dna[0]) - k + 1)],
-                key=lambda x: self.prob(x),
+                key=lambda x: self.prob_laplace(x),
             )
             new_motif.append(motifi)
-        self.__motifs = np.array(list(map(lambda x: list(x), new_motif)))
+        return Motif(new_motif)
 
     def profile_destr(self, dna: list[str], line: int) -> list[int]:
-        profile = self.profile_base()
-        k = len(profile[0])
+        new_motif = self.as_list()
+        new_motif.pop(line)
+        new_motif = Motif(new_motif)
+        k = len(self.count()[0])
+
         probs = []
-        for i in range(len(profile[0])):
-            ind = self.__dna_parts.index(self.__motifs[line][i])
-            profile[ind][i] -= 1
-        for i in range(len(dna[0]) - k + 1):
-            pattern = dna[i : i + k]
-            res = 1
-            for i in range(len(pattern)):
-                ind = self.__dna_parts.index(pattern[i])
-                res *= profile[ind, i]
+
+        for j in range(len(dna[0]) - k + 1):
+            pattern = dna[line][j : j + k]
+            res = new_motif.prob_laplace(pattern)
             probs.append(res)
-        return list(map(lambda x: x / sum(probs), probs))
+
+        # print(probs)
+        return probs
+
+    def copy(self):
+        return Motif(self.as_list())
