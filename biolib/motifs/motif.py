@@ -41,7 +41,7 @@ class Motif:
         matr = self.count() + np.ones_like(self.count())
         return matr / t
 
-    def consensus(self) -> list[str]:
+    def consensus(self) -> str:
         matr = self.count().argmax(axis=0)
         cons = ""
         for i in matr:
