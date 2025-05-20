@@ -17,6 +17,15 @@ def pattern_position(pattern: str, text: str) -> list[int]:
     return indexes
 
 
+def frequent_words(text: str, k: int):
+    count = [0] * (len(text) - k)
+    for i in range(len(text) - k + 1):
+        pattern = text[i : i + k]
+        count[i] = find_occurances(text, pattern)
+    max_count = max(count)
+    return {text[i : i + k] for i in count if i == max_count}
+
+
 def compute_frequences(text: str, k: int) -> list[int]:
     freq_array = [0] * pow(4, k)
     for i in range(len(text) - k + 1):
@@ -26,7 +35,7 @@ def compute_frequences(text: str, k: int) -> list[int]:
     return freq_array
 
 
-def frequent_words(text: str, k: int) -> tuple[list[str], int]:
+def frequent_words_fast(text: str, k: int) -> tuple[list[str], int]:
     patterns = []
     freqmap = compute_frequences(text, k)
     maxfreq = max(freqmap)
@@ -43,6 +52,31 @@ def find_occurances(text: str, pattern: str) -> int:
             count += 1
 
     return count
+
+
+def find_clumps(Text, k, L, t):
+    Positions = set()
+    freq = {}
+
+    for i in range(len(Text) - L + 1):
+        if i == 0:
+            window = Text[i : i + L]
+            for j in range(len(window) - k + 1):
+                kmer = window[j : j + k]
+                freq[kmer] = freq.get(kmer, 0) + 1
+        else:
+            left_kmer = Text[i - 1 : i - 1 + k]
+            freq[left_kmer] -= 1
+            if freq[left_kmer] == 0:
+                del freq[left_kmer]
+
+            right_kmer = Text[i + L - k : i + L]
+            freq[right_kmer] = freq.get(right_kmer, 0) + 1
+
+        if max(freq.values(), default=0) >= t:
+            Positions.add(i)
+
+    return Positions
 
 
 def frequent_words_with_mismatches_compliments(

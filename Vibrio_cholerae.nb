@@ -1,0 +1,605 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     25534,        597]
+NotebookOptionsPosition[     21603,        535]
+NotebookOutlinePosition[     22035,        552]
+CellTagsIndexPosition[     21992,        549]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetDirectory", "@", 
+   RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.956297283106268*^9, 3.95629729804529*^9}, {
+  3.9562974122949657`*^9, 3.9562974313178844`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"0c7d200f-149f-724c-b00f-3e3891a0e296"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"VibrioCholeraeChromosome", "=", 
+   RowBox[{"StringDelete", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{
+      "\"\<files/Vibrio cholerae Chromosome.fna\>\"", ",", "\"\<String\>\""}],
+       "]"}], ",", "\"\<\\n\>\""}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.9562974063236713`*^9, 3.956297409290455*^9}, {
+  3.9562974758132915`*^9, 3.9562975394729576`*^9}},
+ CellLabel->"In[2]:=",ExpressionUUID->"814581b9-25a7-4e4b-ae32-ec3c7da9d58e"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["1.1 Frequent word count", "Subsection"]], "Subtitle",
+ CellChangeTimes->{{3.956297568128124*^9, 
+  3.956297581354332*^9}},ExpressionUUID->"7ed7007b-6a27-a742-af77-\
+07fc9e752279"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"FrequentWords", "[", 
+    RowBox[{"Text_", ",", "len_"}], "]"}], ":=", 
+   RowBox[{"Block", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"max", ",", 
+       RowBox[{"words", "=", 
+        RowBox[{"Counts", "@", 
+         RowBox[{"StringPartition", "[", 
+          RowBox[{"Text", ",", "len", ",", "1"}], "]"}]}]}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"max", "=", 
+       RowBox[{"Max", "@", "words"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Select", "[", 
+       RowBox[{"words", ",", 
+        RowBox[{
+         RowBox[{"#", "==", "max"}], "&"}]}], "]"}]}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.956297613993822*^9, 3.956297659005087*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"480cd4e1-d8a3-0644-b415-e2fc5da423f6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FrequentWords", "[", 
+  RowBox[{"VibrioCholeraeChromosome", ",", "9"}], "]"}]], "Input",
+ CellChangeTimes->{{3.9562976818251553`*^9, 3.956297693791271*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"a7d06b04-67f9-0b4c-b5ae-97816b6e48c8"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{"\<\"TTTGAGTTT\"\>", "\[Rule]", "151"}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.956297700515894*^9, 3.9562988800270805`*^9, 
+  3.956298988714588*^9, 3.956304303077795*^9, 3.956304489054743*^9},
+ CellLabel->"Out[4]=",ExpressionUUID->"ca1f09da-345a-8f43-b0b5-2b11dd5dd8fd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["1.2 Reverse compliment", "Subsection"]], "Section",
+ CellChangeTimes->{{3.95629779707975*^9, 
+  3.956297831366234*^9}},ExpressionUUID->"d4526bdc-cb95-b349-9998-\
+41cee8a92b0b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"dna", "=", 
+   RowBox[{"Entity", "[", 
+    RowBox[{"\"\<BioSequenceType\>\"", ",", "\"\<DNA\>\""}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"dna", "@", "#"}], "&"}], "/@", 
+  RowBox[{"{", 
+   RowBox[{
+   "\"\<Alphabet\>\"", ",", "\"\<AlphabetRules\>\"", ",", 
+    "\"\<ComplementLetterRules\>\""}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Complement", "=", 
+  RowBox[{"Select", "[", 
+   RowBox[{
+    RowBox[{"dna", "@", "\"\<ComplementLetterRules\>\""}], ",", 
+    RowBox[{
+     RowBox[{"MemberQ", "[", 
+      RowBox[{
+       RowBox[{"%", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+       ",", "#"}], "]"}], "&"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.9562978756730957`*^9, 3.9562979298037033`*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"aff0c00b-af56-8b4b-bdfe-47fa7dee1127"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "conopen", 
+   "\"Using \\!\\(\\*RowBox[{\\\"EntityValue\\\"}]\\) requires internet \
+connectivity. Please check your network connection. You may need to configure \
+your firewall program or set a proxy in the Internet Connectivity tab of the \
+Preferences dialog.\"", 2, 6, 1, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.956304489164055*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"0d0b6221-b0c1-6c4b-bae5-c3b33bd247d7"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "nodat", 
+   "\"Unable to download data. Some or all results may be missing.\"", 2, 6, 
+   2, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.9563044891720543`*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"62032931-fdad-ed43-865f-9cfcf5c1fcc7"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "outdcache", "\"Using potentially outdated cached values.\"",
+    2, 6, 3, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.9563044893092194`*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"44e63710-ebc5-c745-b6f5-d678e8572bd6"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "conopen", 
+   "\"Using \\!\\(\\*RowBox[{\\\"EntityValue\\\"}]\\) requires internet \
+connectivity. Please check your network connection. You may need to configure \
+your firewall program or set a proxy in the Internet Connectivity tab of the \
+Preferences dialog.\"", 2, 6, 4, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.9563044893484325`*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"a6a824c2-88cb-dc4c-ad0a-c726a527842d"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "nodat", 
+   "\"Unable to download data. Some or all results may be missing.\"", 2, 6, 
+   5, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.9563044893544254`*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"9e5ae75c-bd69-e947-bc31-3f7f3a631cc6"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "conopen", 
+   "\"Using \\!\\(\\*RowBox[{\\\"EntityValue\\\"}]\\) requires internet \
+connectivity. Please check your network connection. You may need to configure \
+your firewall program or set a proxy in the Internet Connectivity tab of the \
+Preferences dialog.\"", 2, 6, 6, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.9563044894053993`*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"7c8455f9-f191-5d4f-905e-dba39d05f0d4"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General", "stop", 
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"EntityValue\\\", \\\"::\
+\\\", \\\"conopen\\\"}], \\\"MessageName\\\"]\\) will be suppressed during \
+this calculation.\"", 2, 6, 7, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.956304489409088*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"6ee8f010-72f4-a545-a6bb-3956e343cb0c"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "nodat", 
+   "\"Unable to download data. Some or all results may be missing.\"", 2, 6, 
+   8, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.956304489413088*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"0b5b0276-c612-ea41-adf1-ec508d47d7fd"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General", "stop", 
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"EntityValue\\\", \\\"::\
+\\\", \\\"nodat\\\"}], \\\"MessageName\\\"]\\) will be suppressed during this \
+calculation.\"", 2, 6, 9, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.9563044894150867`*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"0d18e01d-fdf9-584e-bcee-4fa87fdeede5"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "outdcache", "\"Using potentially outdated cached values.\"",
+    2, 6, 10, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.9563044894171124`*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"fa958a9b-c322-f549-9abf-6948880a854b"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "outdcache", "\"Using potentially outdated cached values.\"",
+    2, 6, 11, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.956304489497614*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"4ca129b9-6176-f84a-9333-6bb13438a2e8"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General", "stop", 
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"EntityValue\\\", \\\"::\
+\\\", \\\"outdcache\\\"}], \\\"MessageName\\\"]\\) will be suppressed during \
+this calculation.\"", 2, 6, 12, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.9563044895016136`*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"101f74b3-7ae0-bc4d-9890-d0963cc1e77f"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"$Failed", ",", "$Failed", ",", "$Failed"}], "}"}]], "Output",
+ CellChangeTimes->{3.956297859106903*^9, 3.956297910765684*^9, 
+  3.956297944328457*^9, 3.956298880519665*^9, 3.9562989892228928`*^9, 
+  3.956304303560316*^9, 3.956304489543497*^9},
+ CellLabel->"Out[6]=",ExpressionUUID->"8f93c218-f04b-6642-9eb4-b90623b3e55c"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "conopen", 
+   "\"Using \\!\\(\\*RowBox[{\\\"EntityValue\\\"}]\\) requires internet \
+connectivity. Please check your network connection. You may need to configure \
+your firewall program or set a proxy in the Internet Connectivity tab of the \
+Preferences dialog.\"", 2, 7, 13, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.956304489589712*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"12380e94-9f54-d341-8d2f-47f20e58a72f"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "nodat", 
+   "\"Unable to download data. Some or all results may be missing.\"", 2, 7, 
+   14, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.9563044895945835`*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"84a61363-bfbd-cb45-9938-cacb81957989"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "outdcache", "\"Using potentially outdated cached values.\"",
+    2, 7, 15, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.956304489597351*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"3ea82ec6-cc53-6648-bac6-bcfd4db1e110"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "conopen", 
+   "\"Using \\!\\(\\*RowBox[{\\\"EntityValue\\\"}]\\) requires internet \
+connectivity. Please check your network connection. You may need to configure \
+your firewall program or set a proxy in the Internet Connectivity tab of the \
+Preferences dialog.\"", 2, 7, 16, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.9563044896377125`*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"98863ae7-bbad-4846-8584-75f05a30910e"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "EntityValue", "nodat", 
+   "\"Unable to download data. Some or all results may be missing.\"", 2, 7, 
+   17, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.9563044896424656`*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"35be2f7b-8c57-ec49-bf4e-45e13c720c3f"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Select", "normal", 
+   "\"Nonatomic expression expected at position \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\) in \\!\\(\\*RowBox[{\\\"Select\\\", \
+\\\"[\\\", RowBox[{\\\"$Failed\\\", \\\",\\\", \
+RowBox[{RowBox[{\\\"MemberQ\\\", \\\"[\\\", RowBox[{RowBox[{\\\"%\\\", \\\"\
+\[LeftDoubleBracket]\\\", \\\"1\\\", \\\"\[RightDoubleBracket]\\\"}], \\\",\\\
+\", \\\"#1\\\"}], \\\"]\\\"}], \\\"&\\\"}]}], \\\"]\\\"}]\\).\"", 2, 7, 18, 
+   26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.9563044896744995`*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"f89ca914-c81a-3244-a53e-dbbf3e49c0ed"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Set", "wrsym", 
+   "\"Symbol \\!\\(\\*RowBox[{\\\"Complement\\\"}]\\) is Protected.\"", 2, 7, 
+   19, 26203691084666320873, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.956297859212389*^9, 3.956297910228159*^9, 
+  3.9562979437436237`*^9, 3.9562988801525784`*^9, 3.956298988867672*^9, 
+  3.956304303244608*^9, 3.956304489704397*^9},
+ CellLabel->
+  "During evaluation of \
+In[5]:=",ExpressionUUID->"12359702-37b1-984a-a26d-30a1dda4ca1c"],
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{"$Failed", ",", 
+   RowBox[{
+    RowBox[{"MemberQ", "[", 
+     RowBox[{
+      RowBox[{"%", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+      ",", "#1"}], "]"}], "&"}]}], "]"}]], "Output",
+ CellChangeTimes->{3.956297859106903*^9, 3.956297910765684*^9, 
+  3.956297944328457*^9, 3.956298880519665*^9, 3.9562989892228928`*^9, 
+  3.956304303560316*^9, 3.956304489708395*^9},
+ CellLabel->"Out[7]=",ExpressionUUID->"52f037c7-d696-324c-8761-8ed94ece6417"]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "ReverseCompliment", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ReverseCompliment", "[", "dna_String", "]"}], ":=", 
+   RowBox[{"StringReverse", "@", 
+    RowBox[{"StringReplace", "[", 
+     RowBox[{"dna", ",", "Complement"}], "]"}]}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.9562979822868233`*^9, 3.9562980182127666`*^9}},
+ CellLabel->"In[8]:=",ExpressionUUID->"8404e7a4-4ae3-be4f-96dd-5d0637293343"],
+
+Cell[CellGroupData[{
+
+Cell["1.3 Approximate ORI point", "Subsection",
+ CellChangeTimes->{{3.9562981545584583`*^9, 
+  3.9562981775272274`*^9}},ExpressionUUID->"531d0174-7c38-ff4d-9031-\
+b99630dcc189"],
+
+Cell[BoxData[
+ RowBox[{"ClearAll", "[", "f", "]"}]], "Input",
+ CellChangeTimes->{{3.9563040552618103`*^9, 3.956304058748892*^9}, {
+  3.9563040978243237`*^9, 3.9563040992787113`*^9}},
+ CellLabel->"In[10]:=",ExpressionUUID->"5b981732-f052-9942-8d33-d83d8c5a529a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"f", "[", "dna_", "]"}], ":=", " ", 
+   RowBox[{"Block", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"vals", "=", 
+       RowBox[{"{", "0", "}"}]}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"AppendTo", "[", 
+        RowBox[{"vals", ",", 
+         RowBox[{
+          RowBox[{"vals", "[", 
+           RowBox[{"[", 
+            RowBox[{"-", "1"}], "]"}], "]"}], "+", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"#", "===", "\"\<A\>\""}], "||", 
+             RowBox[{"#", "===", "\"\<T\>\""}]}], ",", "0", ",", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"#", "===", "\"\<G\>\""}], ",", "1", ",", 
+              RowBox[{"-", "1"}]}], "]"}]}], "]"}]}]}], "]"}], "&"}], "/@", 
+      RowBox[{"StringSplit", "[", 
+       RowBox[{"dna", ",", "\"\<\>\""}], "]"}]}]}], "\[IndentingNewLine]", 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.956300561568077*^9, 3.956300579922346*^9}, {
+  3.9563008344861298`*^9, 3.956300868707512*^9}, {3.9563009173437576`*^9, 
+  3.956300972949356*^9}, {3.956301163507822*^9, 3.9563012262644615`*^9}, {
+  3.9563012784709053`*^9, 3.9563013742983494`*^9}, {3.9563032816742325`*^9, 
+  3.956303323931736*^9}, {3.9563034607022686`*^9, 3.9563035051604137`*^9}, {
+  3.95630353752396*^9, 3.956303545709297*^9}, {3.9563039361955967`*^9, 
+  3.9563039673857*^9}, {3.956304014048565*^9, 3.9563040350113735`*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"18afb32a-b27e-c046-92a9-5752cc506c87"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"func", "=", 
+  RowBox[{"f", "[", "VibrioCholeraeChromosome", "]"}]}]], "Input",
+ CellChangeTimes->{{3.9562985963805103`*^9, 3.9562986002062893`*^9}, {
+  3.956300981987007*^9, 3.956300999965353*^9}, {3.9563012309795017`*^9, 
+  3.9563012334594707`*^9}, {3.956301385700592*^9, 3.9563013875874023`*^9}, {
+  3.9563035549764786`*^9, 3.956303561257105*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"ceba1b65-4a0e-7845-a13a-38e7584a196f"],
+
+Cell[BoxData[
+ TemplateBox[<|"shortenedBoxes" -> TagBox[
+     RowBox[{
+       RowBox[{
+         RowBox[{
+           RowBox[{"f", "[", 
+             RowBox[{
+               
+               RowBox[{
+                "\"GTGTTTGACACAACAGTTTATCTCGCTAAAATGGCCGCCTCTTCTGAAGCAGACCGCTA\
+AGAAGAACGCTCTTTAACAAT\\\
+rATAAACCAATCAATCTGTGTGGGCACTCGTTGATGATAATCAAAAAAGATTTATCAATGAACTGAGTGACCATTTGA\
+GTG\\rAGCAATCATTCAGCACAGTCAATTCACTATCGAAAGATAGTATCAGTATTCATTGAGCCGAAGCGAAAGCTT\
+CACAAAAC\\\
+rTTTTAATTGAAGAGTTTGATCATGGCTCAGATTGAACGCTGGCGGCAGGCCTAACACATGCAAGTCGAGCGGCAGCA\
+CAG\\rAGGAACTTGTTCCTTGGGTGGCGAGCGGCGGACGGGTGAGTAATGCCTGGGAAATTGCCCGGTAGAGGGGGA\
+TAACCATT\\rGGAAACGATGGCTAATACCGCATAACCTCGCAAGAGCAAAGCAGGG\"", "\[Ellipsis]", 
+                 "\"ATTGTGCAGAAAGCCACCTTCGGGTGGCTTTTTTACTTTGTGGTGATTACGC\\\
+rTGGAGTTCGGATAAGATATAAGCGCAGGGTGGGCTTCGGCCTGGTACTTGCAGCGCATGAGCGCAAGACGCACCTCG\
+GTC\\rATACAGGGGTTGGATAAAACTATGTGTAAATTATATATCTATCGCGCTGATCATGGCTCATTTGCGGAGGCG\
+CTGAAGTG\\\
+rTGAAGCTGTTTACCAATCAACAGGGGATGCGCTTGAACCTGAATTTGTAGATGGCCCAGCTGGTAGAGTGACATATT\
+TAA\\rGTGATATGCATTCAGCAATACAAACTGTTTGCAACGCAGCTGGCCGAGATGATTTGGTTTTCGGTACAGTCA\
+TTAAGGGT\\\
+rATCTTTTGGGAGCTGGAAGAATTGATCGACCACTTTGAGAAGATAAACGAATGGCCTAGTGAGAACTATCCTG\\r\
+\""}], "-", "1"}], "]"}], "+", 
+           RowBox[{"If", "[", 
+             TemplateBox[{"1"}, "OutputSizeLimit`Skeleton"], "]"}]}], "&"}], 
+       " ", 
+       RowBox[{"StringPart", "[", 
+         TemplateBox[{"1"}, "OutputSizeLimit`Skeleton"], "]"}]}], 
+     Short[#, 8]& ], "line" -> 36, "sessionID" -> 26203665290731150329, 
+   "byteCount" -> 12572104, "size" -> 8, "stored" -> False, "expr" -> 
+   Missing["NotAvailable", "NewSessionID"], "wrap" -> OutputSizeLimit`Defer, 
+   "version" -> 1|>,
+  "OutputSizeLimitTemplate"]], "Output",
+ CellChangeTimes->{{3.956298600864565*^9, 3.9562986163724003`*^9}, {
+   3.956298655696129*^9, 3.956298685016918*^9}, 3.956301251745861*^9, 
+   3.9563031937210846`*^9, 3.956303276364256*^9, {3.9563040401093864`*^9, 
+   3.956304049342743*^9}},
+ CellLabel->"Out[36]=",ExpressionUUID->"05993a27-daf4-5549-a46e-ba68a3a345fe"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", "func", "]"}]], "Input",
+ CellChangeTimes->{{3.956301252294504*^9, 3.9563012717822247`*^9}, {
+  3.956302695750559*^9, 3.956302700257427*^9}, {3.9563044766070957`*^9, 
+  3.95630448078458*^9}},ExpressionUUID->"cf9c3387-dd97-4d4a-bbcc-\
+cdee2b5a1edd"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1280, 732},
+WindowMargins->{{-5.5, Automatic}, {Automatic, -5.5}},
+Magnification:>1. Inherited,
+FrontEndVersion->"14.1 for Microsoft Windows (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"a768b745-aa65-ee41-a7ba-82ad3ad7eead"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 314, 6, 28, "Input",ExpressionUUID->"0c7d200f-149f-724c-b00f-3e3891a0e296"],
+Cell[871, 28, 497, 11, 28, "Input",ExpressionUUID->"814581b9-25a7-4e4b-ae32-ec3c7da9d58e"],
+Cell[CellGroupData[{
+Cell[1393, 43, 203, 3, 47, "Subtitle",ExpressionUUID->"7ed7007b-6a27-a742-af77-07fc9e752279"],
+Cell[1599, 48, 877, 23, 104, "Input",ExpressionUUID->"480cd4e1-d8a3-0644-b415-e2fc5da423f6"],
+Cell[CellGroupData[{
+Cell[2501, 75, 258, 4, 28, "Input",ExpressionUUID->"a7d06b04-67f9-0b4c-b5ae-97816b6e48c8"],
+Cell[2762, 81, 348, 6, 32, "Output",ExpressionUUID->"ca1f09da-345a-8f43-b0b5-2b11dd5dd8fd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3147, 92, 200, 3, 56, "Section",ExpressionUUID->"d4526bdc-cb95-b349-9998-41cee8a92b0b"],
+Cell[CellGroupData[{
+Cell[3372, 99, 872, 23, 66, "Input",ExpressionUUID->"aff0c00b-af56-8b4b-bdfe-47fa7dee1127"],
+Cell[4247, 124, 684, 13, 26, "Message",ExpressionUUID->"0d0b6221-b0c1-6c4b-bae5-c3b33bd247d7"],
+Cell[4934, 139, 502, 11, 26, "Message",ExpressionUUID->"62032931-fdad-ed43-865f-9cfcf5c1fcc7"],
+Cell[5439, 152, 483, 10, 22, "Message",ExpressionUUID->"44e63710-ebc5-c745-b6f5-d678e8572bd6"],
+Cell[5925, 164, 686, 13, 22, "Message",ExpressionUUID->"a6a824c2-88cb-dc4c-ad0a-c726a527842d"],
+Cell[6614, 179, 502, 11, 22, "Message",ExpressionUUID->"9e5ae75c-bd69-e947-bc31-3f7f3a631cc6"],
+Cell[7119, 192, 686, 13, 22, "Message",ExpressionUUID->"7c8455f9-f191-5d4f-905e-dba39d05f0d4"],
+Cell[7808, 207, 598, 12, 22, "Message",ExpressionUUID->"6ee8f010-72f4-a545-a6bb-3956e343cb0c"],
+Cell[8409, 221, 500, 11, 22, "Message",ExpressionUUID->"0b5b0276-c612-ea41-adf1-ec508d47d7fd"],
+Cell[8912, 234, 598, 12, 22, "Message",ExpressionUUID->"0d18e01d-fdf9-584e-bcee-4fa87fdeede5"],
+Cell[9513, 248, 484, 10, 22, "Message",ExpressionUUID->"fa958a9b-c322-f549-9abf-6948880a854b"],
+Cell[10000, 260, 482, 10, 22, "Message",ExpressionUUID->"4ca129b9-6176-f84a-9333-6bb13438a2e8"],
+Cell[10485, 272, 603, 12, 22, "Message",ExpressionUUID->"101f74b3-7ae0-bc4d-9890-d0963cc1e77f"],
+Cell[11091, 286, 361, 6, 32, "Output",ExpressionUUID->"8f93c218-f04b-6642-9eb4-b90623b3e55c"],
+Cell[11455, 294, 685, 13, 22, "Message",ExpressionUUID->"12380e94-9f54-d341-8d2f-47f20e58a72f"],
+Cell[12143, 309, 503, 11, 22, "Message",ExpressionUUID->"84a61363-bfbd-cb45-9938-cacb81957989"],
+Cell[12649, 322, 482, 10, 22, "Message",ExpressionUUID->"3ea82ec6-cc53-6648-bac6-bcfd4db1e110"],
+Cell[13134, 334, 687, 13, 22, "Message",ExpressionUUID->"98863ae7-bbad-4846-8584-75f05a30910e"],
+Cell[13824, 349, 503, 11, 22, "Message",ExpressionUUID->"35be2f7b-8c57-ec49-bf4e-45e13c720c3f"],
+Cell[14330, 362, 819, 16, 23, "Message",ExpressionUUID->"f89ca914-c81a-3244-a53e-dbbf3e49c0ed"],
+Cell[15152, 380, 494, 11, 22, "Message",ExpressionUUID->"12359702-37b1-984a-a26d-30a1dda4ca1c"],
+Cell[15649, 393, 509, 11, 32, "Output",ExpressionUUID->"52f037c7-d696-324c-8761-8ed94ece6417"]
+}, Open  ]],
+Cell[16173, 407, 486, 11, 47, "Input",ExpressionUUID->"8404e7a4-4ae3-be4f-96dd-5d0637293343"],
+Cell[CellGroupData[{
+Cell[16684, 422, 177, 3, 53, "Subsection",ExpressionUUID->"531d0174-7c38-ff4d-9031-b99630dcc189"],
+Cell[16864, 427, 261, 4, 28, "Input",ExpressionUUID->"5b981732-f052-9942-8d33-d83d8c5a529a"],
+Cell[17128, 433, 1580, 36, 66, "Input",ExpressionUUID->"18afb32a-b27e-c046-92a9-5752cc506c87"],
+Cell[CellGroupData[{
+Cell[18733, 473, 453, 7, 28, "Input",ExpressionUUID->"ceba1b65-4a0e-7845-a13a-38e7584a196f"],
+Cell[19189, 482, 2071, 40, 235, "Output",ExpressionUUID->"05993a27-daf4-5549-a46e-ba68a3a345fe"]
+}, Open  ]],
+Cell[21275, 525, 288, 5, 28, "Input",ExpressionUUID->"cf9c3387-dd97-4d4a-bbcc-cdee2b5a1edd"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

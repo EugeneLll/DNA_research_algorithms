@@ -13,6 +13,7 @@ def motif_enumeration(dna: list[str], k: int, d: int) -> set[str]:
             flag = all(map(lambda x: neighbor in x, dna[1:]))
             if flag:
                 patterns.add(neighbor)
+    return patterns
 
 
 def median_string(dna: list[str], k: int) -> tuple[str, int]:
